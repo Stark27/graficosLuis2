@@ -1,0 +1,7 @@
+{
+  "name": "dsl-generated-dependencies",
+  "dependencies": {
+    "chart.js": "latest",
+    "bootstrap-sass-official": "latest"
+  }
+}
