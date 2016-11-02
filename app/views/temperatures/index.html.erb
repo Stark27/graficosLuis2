@@ -1,39 +1,161 @@
+
 <p id="notice"><%= notice %></p>
 
 <h1>Temperatures</h1>
 
-<div class="col-md-6">
-  <canvas id="myChart" width="400" height="400"></canvas>
+<div class="row">
+  <div class="col-md-4">
+    <canvas id="myChart" width="300" height="300"></canvas>
+  </div>
+
+  <div class="col-md-8">
+    <table>
+      <thead>
+      <tr>
+        <th>Hora</th>
+        <th>Temperatura</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @temperatures.each do |temperature| %>
+          <tr>
+            <td><%= temperature.hora %></td>
+            <td><%= temperature.temperatura %></td>
+            <td><%= link_to 'Show', temperature %></td>
+            <td><%= link_to 'Edit', edit_temperature_path(temperature) %></td>
+            <td><%= link_to 'Destroy', temperature, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+
+  <%= link_to 'New Temperature', new_temperature_path %>
+
 </div>
 
-<div class="col-md-6">
-  <table>
-    <thead>
-    <tr>
-      <th>Hora</th>
-      <th>Temperatura</th>
-      <th colspan="3"></th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <% @temperatures.each do |temperature| %>
-        <tr>
-          <td><%= temperature.hora %></td>
-          <td><%= temperature.temperatura %></td>
-          <td><%= link_to 'Show', temperature %></td>
-          <td><%= link_to 'Edit', edit_temperature_path(temperature) %></td>
-          <td><%= link_to 'Destroy', temperature, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+
+<div class="row">
+  <h2>Titulo del gráfico</h2>
+  <div class="col-md-4">
+    <canvas id="myChart2" width="300" height="300"></canvas>
+  </div>
+
+  <div class="col-md-8">
+    <h1>Titulo de prueba</h1>
+    <h2>Texto de prueba</h2>
+    <p>Texto de prueba</p>
+    <p>Texto de prueba</p>
+    <p>Texto de prueba</p>
+    <p>Texto de prueba</p>
+  </div>
 </div>
 
 
-<br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="box-sm">
+      <div class="box-header with-border">
+        <h3 class="box-title">Donut Chart 1</h3>
+      </div>
+      <div class="box-body">
+        <canvas id="myChart3" width="200" height="200"></canvas>
+      </div>
+    </div>
 
-<%= link_to 'New Temperature', new_temperature_path %>
+  </div>
+
+  <div class="col-md-6">
+    <div class="box-sm">
+      <div class="box-header with-border">
+        <h3 class="box-title">Donut Chart 2</h3>
+      </div>
+      <div class="box-body">
+        <canvas id="myChart4" width="200" height="200"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="box-body">
+    <div class="row">
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tbody>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Reason</th>
+          </tr>
+
+          <tr>
+            <td>183</td>
+            <td>Mike</td>
+            <td>11-7-2016</td>
+            <td>Aproved</td>
+            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+          </tr>
+
+          <tr>
+            <td>183</td>
+            <td>Mike</td>
+            <td>11-7-2016</td>
+            <td>Aproved</td>
+            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+          </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-aqua">
+        <i class="fa fa-battery-full">
+        </i>
+      </span>
+      <div class="info-box-content">
+        <span class="info-box-text">CPU Trafico</span>
+        <span class="info-box-number">90<small>%</small></span>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<div class="col-lg-3 col-xs-6">
+  <!-- small box -->
+  <div class="small-box bg-aqua">
+    <div class="inner">
+      <h3>150</h3>
+
+      <p>New Orders</p>
+    </div>
+    <div class="icon">
+      <i class="icono"></i>
+    </div>
+    <a href="#" class="small-box-footer">More info <i class="fa fa-battery-full"></i></a>
+  </div>
+</div>
 
 <script>
   //temperatures.json
@@ -43,11 +165,10 @@
     dataType:'json',
     success: function (res) {
       console.log('Respuesta servidor', res);
-      var arr = [];
+      var temp = [];
 
       for (var item in res){
-        arr.push(res[item] ['temperatura']);
-
+        temp.push(res[item]['temperatura']);
       }
 
       var data = {
@@ -72,7 +193,7 @@
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: arr,
+            data: temp,
             spanGaps: false,
           }
         ]
@@ -87,9 +208,162 @@
 
     }
   });
+</script>
+
+<script>
+  //temperatures.json
+  $.ajax({
+    url:'',
+    type: 'GET',
+    dataType:'json',
+    success: function (res) {
+      console.log('Respuesta servidor', res);
+      var temp = [];
+
+      for (var item in res){
+        temp.push(res[item]['temperatura']);
+      }
+
+      var data = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+          {
+            label: "My First dataset",
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1,
+            data: [65, 59, 80, 81, 56, 55, 40, 20],
+          },
+          {
+            label: "My First dataset",
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1,
+            data: [65, 59, 80, 81, 56, 55, 40, 20],
+          }
+        ]
+      };
+
+      var ctx = document.getElementById("myChart2");
+
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data
+      });
+    }
+  });
+</script>
+
+<script>
+  var data = {
+    labels: [
+      "Red",
+      "Blue",
+      "Yellow"
+    ],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56"
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56"
+        ]
+      }]
+  };
+
+  var ctx = document.getElementById("myChart3");
+
+  var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data
+  });
 
 
+  new Chart(ctx,{
+    type:"doughnut",
+    animation:{
+      animateScale:true
+    }
+  });
+
+</script>
+
+<script>
+  var data = {
+    labels: [
+      "Red",
+      "Blue",
+      "Yellow"
+    ],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56"
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56"
+        ]
+      }]
+  };
+
+  var ctx = document.getElementById("myChart4");
+
+  var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data
+  });
 
 
+  new Chart(ctx,{
+    type:"doughnut",
+    animation:{
+      animateScale:true
+    }
+  });
 
 </script>

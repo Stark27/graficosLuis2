@@ -19,6 +19,9 @@ gem 'coffee-rails', '~> 4.2'
 # Bower gem
 gem 'bower-rails', '~> 0.11.0'
 
+# Font Awesome
+gem 'font-awesome-rails'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
